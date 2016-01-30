@@ -49,7 +49,7 @@ new Vue({
     }
   },
   components: {
-    pagination: require('vue-pagination')
+    pagination: require('vue-bootstrap-pagination')
   }
 })
 ```
