@@ -6,5 +6,5 @@ elixir.config.publicPath = 'dist';
 elixir.config.sourcemaps = false;
 
 elixir(function(mix) {
-    mix.browserify('pagination.js', 'dist/vue-pagination.js');
+    mix.browserify('pagination.js', 'dist/vue-bootstrap-pagination.js');
 });

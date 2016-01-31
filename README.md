@@ -40,7 +40,12 @@ new Vue({
   },
   methods: {
     loadData: function () {
-      this.$http.get('/getData', { /* additional parameters */ }).then(function (response) {
+      var data = {
+        paginate: this.pagination.per_page,
+        page: this.pagination.current_page,
+        /* additional parameters */
+      };
+      this.$http.get('/getData', data).then(function (response) {
         this.$set('items', response.data.data);
         this.$set('pagination', response.data.pagination);
       }, function(error) {
