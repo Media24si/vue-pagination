@@ -1,7 +1,7 @@
 {
   "name": "vue-bootstrap-pagination",
   "description": "Pagination for vuejs with combination with bootstrap and Laravel's pagination",
-  "main": "dist/pagination.js",
+  "main": "vue-bootstap-pagination.js",
   "authors": [
     "pogachar"
   ],
