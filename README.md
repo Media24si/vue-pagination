@@ -43,12 +43,14 @@ new Vue({
   },
   methods: {
     loadData () {
-      let data = {
-        paginate: this.pagination.per_page,
-        page: this.pagination.current_page,
-        /* additional parameters */
+      let options = {
+        params: {
+          paginate: this.pagination.per_page,
+          page: this.pagination.current_page,
+          /* additional parameters */
+        }
       };
-      this.$http.get('/getData', data).then(response => {
+      this.$http.get('/getData', options).then(response => {
         this.$set('items', response.data.data);
         
         // Overwrite pagination object
