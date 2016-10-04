@@ -31,22 +31,22 @@ module.exports = {
         }
     },
     computed: {
-        array: function () {
-            if(!this.pagination.to) {
+        array () {
+            if (!this.pagination.to) {
                 return [];
             }
 
-            var from = this.pagination.current_page - this.offset;
-            if(from < 1) {
+            let from = this.pagination.current_page - this.offset;
+            if (from < 1) {
                 from = 1;
             }
 
-            var to = from + (this.offset * 2);
-            if(to >= this.pagination.last_page) {
+            let to = from + (this.offset * 2);
+            if (to >= this.pagination.last_page) {
                 to = this.pagination.last_page;
             }
 
-            var arr = [];
+            let arr = [];
             while (from <=to) {
                 arr.push(from);
                 from++;
@@ -56,13 +56,13 @@ module.exports = {
         }
     },
     watch: {
-        'pagination.per_page': function () {
+        'pagination.per_page' () {
             this.callback();
         }
     },
     methods: {
-        changePage: function (page) {
-            this.$set('pagination.current_page', page);
+        changePage (page) {
+            this.$set(this.pagination, 'current_page', page)
             this.callback();
         }
     }

@@ -1,8 +1,10 @@
 # vue-pagination
 Vue pagination component for use with Bootstrap and Laravel pagination.
 
-* [Vue.js](http://vuejs.org/) (tested with 1.0.16).
-* [Bootstrap CSS](http://getbootstrap.com/) (tested with 3.3.6)
+* [Vue.js](http://vuejs.org/) (tested with 2.0.1).
+* [Bootstrap CSS](http://getbootstrap.com/) (tested with 3.3.7)
+
+To use with Vue.js 1 use the older version.
 
 Laravel is not required as long as the pagination object contains the required attributes
 * current_page,
@@ -51,10 +53,10 @@ new Vue({
         }
       };
       this.$http.get('/getData', options).then(response => {
-        this.$set('items', response.data.data);
+        this.items = response.data.data;
         
         // Overwrite pagination object
-        this.$set('pagination', response.data.pagination); // API response edited to have pagination data under pagination object
+        this.pagination = response.data.pagination; // API response edited to have pagination data under pagination object
         
         // Or overwrite only values
         /*
