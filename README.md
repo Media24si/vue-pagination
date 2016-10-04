@@ -28,27 +28,39 @@ $ bower install vue-bootstrap-pagination
 ```js
 new Vue({
   el: '#app',
-  data: function () {
+  data () {
     return {
       items: [],
       pagination: {
-        total: 0, per_page: 12,
-        from: 1, to: 0,
-        current_page: 1
+        total: 0,
+        per_page: 12,    // required
+        current_page: 1, // required
+        last_page: 0,    // required
+        from: 1,
+        to: 12           // required
       }
     }
   },
   methods: {
-    loadData: function () {
-      var data = {
+    loadData () {
+      let data = {
         paginate: this.pagination.per_page,
         page: this.pagination.current_page,
         /* additional parameters */
       };
-      this.$http.get('/getData', data).then(function (response) {
+      this.$http.get('/getData', data).then(response => {
         this.$set('items', response.data.data);
-        this.$set('pagination', response.data.pagination);
-      }, function(error) {
+        
+        // Overwrite pagination object
+        this.$set('pagination', response.data.pagination); // API response edited to have pagination data under pagination object
+        
+        // Or overwrite only values
+        /*
+          this.pagination.current_page = response.data.current_page;
+          this.pagination.last_page = response.data.last_page;
+          this.pagination.to = response.data.to;
+        */
+      }, error => {
         // handle error
       });
     }
@@ -75,3 +87,5 @@ new Vue({
 | pagination    | Object   |         | true     | Pagination object used to create pagination
 | callback      | Function |         | true     | Callback function used to load data for selected page
 | offset        | Number   | 4       |          | Left and right offset of pagination numbers to display
+
+If you change `this.pagination.per_page` the callback function will be called
