@@ -1,21 +1,31 @@
 module.exports = {
-    template: '<nav>' +
-        '<ul class="pagination">' +
-            '<li v-if="pagination.current_page > 1">' +
-                '<a href="#" aria-label="Previous" @click.prevent="changePage(pagination.current_page - 1)">' +
-                    '<span aria-hidden="true">&laquo;</span>' +
-                '</a>' +
-            '</li>' +
-            '<li v-for="num in array" :class="{\'active\': num == pagination.current_page}">' +
-                '<a href="#" @click.prevent="changePage(num)">{{ num }}</a>' +
-            '</li>' +
-            '<li v-if="pagination.current_page < pagination.last_page">' +
-                '<a href="#" aria-label="Next" @click.prevent="changePage(pagination.current_page + 1)">' +
-                    '<span aria-hidden="true">&raquo;</span>' +
-                '</a>' +
-            '</li>' +
-        '</ul>' +
-    '</nav>',
+    template: `<nav>
+        <ul class="pagination" v-if="pagination.last_page > 0">
+            <li v-if="showPrevious()" :class="{ 'disabled' : pagination.current_page <= 1 }">
+                <span v-if="pagination.current_page <= 1">
+                    <span aria-hidden="true">{{ config.previousText }}</span>
+                </span>
+                
+                <a href="#" v-if="pagination.current_page > 1 " :aria-label="config.ariaPrevioius" @click.prevent="changePage(pagination.current_page - 1)">
+                    <span aria-hidden="true">{{ config.previousText }}</span>
+                </a>
+            </li>
+
+            <li v-for="num in array" :class="{ 'active': num == pagination.current_page }">
+                <a href="#" @click.prevent="changePage(num)">{{ num }}</a>
+            </li>
+
+            <li v-if="showNext()" :class="{ 'disabled' : pagination.current_page === pagination.last_page || pagination.last_page === 0 }">
+                <span v-if="pagination.current_page === pagination.last_page || pagination.last_page === 0">
+                    <span aria-hidden="true">{{ config.nextText }}</span>
+                </span>
+                
+                <a href="#" v-if="pagination.current_page < pagination.last_page" :aria-label="config.ariaNext" @click.prevent="changePage(pagination.current_page + 1)">
+                    <span aria-hidden="true">{{ config.nextText }}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>`,
     props: {
         pagination: {
             type: Object,
@@ -25,23 +35,22 @@ module.exports = {
             type: Function,
             required: true
         },
-        offset: {
-            type: Number,
-            default: 4
+        options: {
+            type: Object
         }
     },
     computed: {
         array () {
-            if (!this.pagination.to) {
+            if (this.pagination.last_page <= 0) {
                 return [];
             }
 
-            let from = this.pagination.current_page - this.offset;
+            let from = this.pagination.current_page - this.config.offset;
             if (from < 1) {
                 from = 1;
             }
 
-            let to = from + (this.offset * 2);
+            let to = from + (this.config.offset * 2);
             if (to >= this.pagination.last_page) {
                 to = this.pagination.last_page;
             }
@@ -53,6 +62,16 @@ module.exports = {
             }
 
             return arr;
+        },
+        config () {
+            return Object.assign({
+                offset: 3,
+                ariaPrevious: 'Previous',
+                ariaNext: 'Next',
+                previousText: '«',
+                nextText: '»',
+                alwaysShowPrevNext: false
+            }, this.options);
         }
     },
     watch: {
@@ -61,8 +80,18 @@ module.exports = {
         }
     },
     methods: {
+        showPrevious () {
+            return this.config.alwaysShowPrevNext || this.pagination.current_page > 1;
+        },
+        showNext () {
+            return this.config.alwaysShowPrevNext || this.pagination.current_page < this.pagination.last_page;
+        },
         changePage (page) {
-            this.$set(this.pagination, 'current_page', page)
+            if (this.pagination.current_page === page) {
+                return;
+            }
+
+            this.$set(this.pagination, 'current_page', page);
             this.callback();
         }
     }

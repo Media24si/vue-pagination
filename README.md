@@ -4,26 +4,17 @@ Vue pagination component for use with Bootstrap and Laravel pagination.
 * [Vue.js](http://vuejs.org/) (tested with 2.0.1).
 * [Bootstrap CSS](http://getbootstrap.com/) (tested with 3.3.7)
 
-To use with Vue.js 1 use the older version.
+To use with Vue.js 1 use the 1x version.
 
 Laravel is not required as long as the pagination object contains the required attributes
 * current_page,
 * last_page,
 * per_page,
-* to
 
 ### Installation
 
-#### NPM
-
 ```bash
 $ npm install vue-bootstrap-pagination
-```
-
-#### Bower
-
-```bash
-$ bower install vue-bootstrap-pagination
 ```
 
 ### Example
@@ -62,7 +53,7 @@ new Vue({
         /*
           this.pagination.current_page = response.data.current_page;
           this.pagination.last_page = response.data.last_page;
-          this.pagination.to = response.data.to;
+          ...
         */
       }, error => {
         // handle error
@@ -81,15 +72,27 @@ new Vue({
     <li class="list-group-item" v-for="item in items">{{ item.name }}</li>
   </ul>
 
-  <pagination :pagination="pagination" :callback="loadData" :offset="3"></pagination>
+  <pagination :pagination="pagination" :callback="loadData" :options="options"></pagination>
 </body>
 ```
 
-#### Options
+#### Props
 | Name          | Type     | Default | Required | Description
 | :------------ | :--------| :-------| :--------| :-----------
 | pagination    | Object   |         | true     | Pagination object used to create pagination
 | callback      | Function |         | true     | Callback function used to load data for selected page
-| offset        | Number   | 4       |          | Left and right offset of pagination numbers to display
+| options       | Object   |         |          | Configuration. Look below for available options
+
+Offset prop has ben removed with version 2.10.0. Use `options.offset` instead
+
+##### Options
+| Name                | String  | Default     | Description
+| :-------------------| :-------| :-----------| :-------
+| offset              | Number  | 3           | Left and right offset of pagination numbers to display
+| ariaPrevious        | String  | Previous    | Change default aria previous text
+| ariaNext            | String  | Next        | Change default aria next text
+| previousText        | String  | «           | Change default previous button text
+| nextText            | String  | »           | Change default next button text
+| alwaysShowPrevNext  | Boolean | false       | Show prev/next button even if on first/last page
 
 If you change `this.pagination.per_page` the callback function will be called
