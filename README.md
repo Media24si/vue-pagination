@@ -31,6 +31,12 @@ new Vue({
         last_page: 0,    // required
         from: 1,
         to: 12           // required
+      },
+      paginationOptions: {
+		offset: 4,
+        previousText: 'Prev',
+        nextText: 'Next',
+        alwaysShowPrevNext: true
       }
     }
   },
@@ -72,7 +78,7 @@ new Vue({
     <li class="list-group-item" v-for="item in items">{{ item.name }}</li>
   </ul>
 
-  <pagination :pagination="pagination" :callback="loadData" :options="options"></pagination>
+  <pagination :pagination="pagination" :callback="loadData" :options="paginationOptions"></pagination>
 </body>
 ```
 
