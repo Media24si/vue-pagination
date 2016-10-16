@@ -11,7 +11,7 @@ module.exports = {
                 </a>
             </li>
 
-            <li v-for="num in array" :class="{ 'active': num == pagination.current_page }">
+            <li v-for="num in array" :class="{ 'active': num === pagination.current_page }">
                 <a href="#" @click.prevent="changePage(num)">{{ num }}</a>
             </li>
 
@@ -75,8 +75,10 @@ module.exports = {
         }
     },
     watch: {
-        'pagination.per_page' () {
-            this.callback();
+        'pagination.per_page' (newVal, oldVal) {
+            if (+newVal !== +oldVal) {
+                this.callback();
+            }
         }
     },
     methods: {
