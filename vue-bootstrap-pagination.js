@@ -77,10 +77,12 @@ module.exports = {
             }, this.options);
         },
         sizeClass () {
-            if (this.size == 'large') {
+            if (this.size === 'large') {
                 return 'pagination-lg';
-            } else if(this.size == 'small') {
+            } else if(this.size === 'small') {
                 return 'pagination-sm';
+            } else {
+                return '';
             }
         }
     },
