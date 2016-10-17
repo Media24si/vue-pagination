@@ -1,6 +1,6 @@
 module.exports = {
     template: `<nav>
-        <ul class="pagination" v-if="pagination.last_page > 0">
+        <ul class="pagination" v-if="pagination.last_page > 0" :class="sizeClass">
             <li v-if="showPrevious()" :class="{ 'disabled' : pagination.current_page <= 1 }">
                 <span v-if="pagination.current_page <= 1">
                     <span aria-hidden="true">{{ config.previousText }}</span>
@@ -37,6 +37,9 @@ module.exports = {
         },
         options: {
             type: Object
+        },
+        size: {
+            type: String
         }
     },
     computed: {
@@ -72,6 +75,15 @@ module.exports = {
                 nextText: '»',
                 alwaysShowPrevNext: false
             }, this.options);
+        },
+        sizeClass () {
+            if (this.size === 'large') {
+                return 'pagination-lg';
+            } else if(this.size === 'small') {
+                return 'pagination-sm';
+            } else {
+                return '';
+            }
         }
     },
     watch: {

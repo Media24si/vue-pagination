@@ -88,6 +88,7 @@ new Vue({
 | pagination    | Object   |         | true     | Pagination object used to create pagination
 | callback      | Function |         | true     | Callback function used to load data for selected page
 | options       | Object   |         |          | Configuration. Look below for available options
+| size          | String   |         |          | Change the default size of the pagination. Options: large, small.
 
 Offset prop has ben removed with version 2.10.0. Use `options.offset` instead
 
