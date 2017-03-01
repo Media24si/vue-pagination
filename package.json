@@ -2,12 +2,22 @@
   "name": "vue-bootstrap-pagination",
   "version": "2.10.2",
   "description": "Pagination for vuejs with combination with bootstrap and Laravel's pagination",
-  "main": "vue-bootstrap-pagination.js",
+  "jsnext": "dist/bundle.js",
+  "main": "dist/vue-bootstrap-pagination.common.js",
+  "module": "dist/vue-bootstrap-pagination.esm.js",
+  "directories": {
+    "src": "src",
+    "dist": "dist"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "purge": "rm -rf dist/",
+    "compile": "rollup -c",
+    "build": "npm run purge && npm run compile",
+    "lint": "eslint src/**/*",
+    "beforePublish": "npm run lint && npm run build"
   },
   "files": [
-    "vue-bootstrap-pagination.js"
+    "dist/*.js"
   ],
   "repository": {
     "type": "git",
@@ -21,7 +31,21 @@
     "laravel",
     "pagination"
   ],
-  "dependencies": {},
   "author": "pogachar",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.16.4",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "eslint": "^3.7.1",
+    "eslint-config-airbnb-base": "^11.1.0",
+    "eslint-plugin-html": "^2.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "rollup": "^0.41.4",
+    "rollup-plugin-buble": "^0.15.0",
+    "rollup-plugin-commonjs": "^7.0.0",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-vue": "^2.2.6"
+  }
 }
