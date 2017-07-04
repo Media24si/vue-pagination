@@ -1,7 +1,16 @@
 # vue-pagination
 Vue pagination component for use with Bootstrap and Laravel pagination.
 
-* [Vue.js](http://vuejs.org/) (tested with 2.0.1).
+<p align="center">
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License" />
+  </a>
+  <a href="https://npmjs.org/package/vue-bootstrap-pagination">
+    <img src="https://img.shields.io/npm/v/vue-bootstrap-pagination.svg?style=flat-square" alt="Packagist" />
+  </a>
+</p>
+
+* [Vue.js](http://vuejs.org/) (tested with 2.2.1).
 * [Bootstrap CSS](http://getbootstrap.com/) (tested with 3.3.7)
 
 To use with Vue.js 1 use the 1x version.
@@ -12,16 +21,23 @@ Laravel is not required as long as the pagination object contains the required a
 * per_page,
 
 ### Installation
+```
+npm install --save vue-bootstrap-pagination
+```
 
-```bash
-$ npm install vue-bootstrap-pagination
+or
+
+```
+yarn add vue-bootstrap-pagination
 ```
 
 ### Example
 ```js
+import pagination from 'vue-bootstrap-pagination'
+
 new Vue({
   el: '#app',
-  data () {
+  data() {
     return {
       items: [],
       pagination: {
@@ -30,10 +46,10 @@ new Vue({
         current_page: 1, // required
         last_page: 0,    // required
         from: 1,
-        to: 12           // required
+        to: 12
       },
       paginationOptions: {
-		offset: 4,
+        offset: 4,
         previousText: 'Prev',
         nextText: 'Next',
         alwaysShowPrevNext: true
@@ -41,33 +57,35 @@ new Vue({
     }
   },
   methods: {
-    loadData () {
-      let options = {
+    loadData() {
+      const options = {
         params: {
           paginate: this.pagination.per_page,
           page: this.pagination.current_page,
           /* additional parameters */
         }
       };
-      this.$http.get('/getData', options).then(response => {
-        this.items = response.data.data;
+      this.$http.get('/getData', options)
+        .then(response => {
+          this.items = response.data.data;
         
-        // Overwrite pagination object
-        this.pagination = response.data.pagination; // API response edited to have pagination data under pagination object
+          // Overwrite pagination object
+          this.pagination = response.data.pagination; // API response edited to have pagination data under pagination object
         
-        // Or overwrite only values
-        /*
-          this.pagination.current_page = response.data.current_page;
-          this.pagination.last_page = response.data.last_page;
-          ...
-        */
-      }, error => {
-        // handle error
-      });
+          // Or overwrite only values
+          /*
+            this.pagination.current_page = response.data.current_page;
+            this.pagination.last_page = response.data.last_page;
+            ...
+          */
+         })
+         .catch(error => {
+            // handle error
+         });
     }
   },
   components: {
-    pagination: require('vue-bootstrap-pagination')
+    pagination
   }
 })
 ```
@@ -103,3 +121,13 @@ Offset prop has ben removed with version 2.10.0. Use `options.offset` instead
 | alwaysShowPrevNext  | Boolean | false       | Show prev/next button even if on first/last page
 
 If you change `this.pagination.per_page` the callback function will be called
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+[link-author]: https://github.com/pogachar
