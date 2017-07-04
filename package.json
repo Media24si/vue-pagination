@@ -1,6 +1,6 @@
 {
   "name": "vue-bootstrap-pagination",
-  "version": "2.10.2",
+  "version": "2.10.3",
   "description": "Pagination for vuejs with combination with bootstrap and Laravel's pagination",
   "jsnext": "dist/bundle.js",
   "main": "dist/vue-bootstrap-pagination.common.js",
